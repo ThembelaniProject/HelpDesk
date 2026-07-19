@@ -170,6 +170,8 @@
 
                     <th>Priority</th>
 
+                    <th>SLA</th>
+
                     <th>Status</th>
 
                     <th>Created By</th>
@@ -219,6 +221,45 @@
                             </span>
 
                         </td>
+                        <td>
+
+@if($ticket->status=="Resolved")
+
+    @if($ticket->sla_breached)
+
+        <span class="badge bg-danger">
+            Breached
+        </span>
+
+    @else
+
+        <span class="badge bg-success">
+            Met
+        </span>
+
+    @endif
+
+@elseif($ticket->due_date && now()->greaterThan($ticket->due_date))
+
+    <span class="badge bg-danger">
+        Overdue
+    </span>
+
+@elseif($ticket->due_date && now()->diffInHours($ticket->due_date,false)<=4)
+
+    <span class="badge bg-warning">
+        Due Soon
+    </span>
+
+@else
+
+    <span class="badge bg-primary">
+        Active
+    </span>
+
+@endif
+
+</td>
 
                         <td>
 

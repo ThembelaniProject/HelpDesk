@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -159,6 +158,185 @@
 
     </div>
 
+<div class="row mt-4">
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header">
+
+                Ticket Status
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="statusChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header">
+
+                Priority Distribution
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="priorityChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow mt-4">
+
+    <div class="card-header">
+
+        Monthly Tickets
+
+    </div>
+
+    <div class="card-body">
+
+        <canvas id="monthlyChart"></canvas>
+
+    </div>
+
+</div>
+    <!-- SLA Dashboard -->
+
+<div class="row mt-4">
+
+    <div class="col-md-3">
+
+        <div class="card border-success shadow-sm">
+
+            <div class="card-body">
+
+                <h6 class="text-success">
+                    <i class="bi bi-check-circle-fill"></i>
+                    SLA Met
+                </h6>
+
+                <h2>{{ $slaMet }}</h2>
+
+                <div class="progress mt-3">
+
+                    <div class="progress-bar bg-success"
+                        style="width:
+                        {{ ($slaMet + $slaBreached) > 0
+                            ? ($slaMet / ($slaMet + $slaBreached)) * 100
+                            : 0 }}%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card border-danger shadow-sm">
+
+            <div class="card-body">
+
+                <h6 class="text-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    SLA Breached
+                </h6>
+
+                <h2>{{ $slaBreached }}</h2>
+
+                <div class="progress mt-3">
+
+                    <div class="progress-bar bg-danger"
+                        style="width:
+                        {{ ($slaMet + $slaBreached) > 0
+                            ? ($slaBreached / ($slaMet + $slaBreached)) * 100
+                            : 0 }}%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card border-warning shadow-sm">
+
+            <div class="card-body">
+
+                <h6 class="text-warning">
+                    <i class="bi bi-clock-fill"></i>
+                    Due Soon
+                </h6>
+
+                <h2>{{ $dueSoon }}</h2>
+
+                <div class="progress mt-3">
+
+                    <div class="progress-bar bg-warning"
+                        style="width:100%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card border-dark shadow-sm">
+
+            <div class="card-body">
+
+                <h6 class="text-dark">
+                    <i class="bi bi-alarm-fill"></i>
+                    Overdue
+                </h6>
+
+                <h2>{{ $overdueTickets }}</h2>
+
+                <div class="progress mt-3">
+
+                    <div class="progress-bar bg-dark"
+                        style="width:100%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
     <div class="card shadow mt-4">
 
         <div class="card-header">
@@ -230,72 +408,27 @@
     </div>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
 
-const ctx = document.getElementById('ticketChart');
 
-new Chart(ctx, {
 
-    type: 'doughnut',
+<div class="card shadow mt-4">
 
-    data: {
+    <div class="card-header">
 
-        labels: [
+        SLA Performance
 
-            'Open',
+    </div>
 
-            'Assigned',
+    <div class="card-body">
 
-            'In Progress',
+        <canvas id="slaChart" height="120"></canvas>
 
-            'Resolved',
+    </div>
 
-            'Closed'
+</div>
 
-        ],
 
-        datasets: [{
 
-            label: 'Tickets',
-
-            data: [
-
-                {{ $openTickets }},
-
-                {{ $assignedTickets }},
-
-                {{ $progressTickets }},
-
-                {{ $resolvedTickets  }},
-
-                {{ $closedTickets }}
-
-            ]
-
-        }]
-
-    },
-
-    options: {
-
-        responsive: true,
-
-        plugins: {
-
-            legend: {
-
-                position: 'bottom'
-
-            }
-
-        }
-
-    }
-
-});
-
-</script>
 <div class="card mt-4">
 
 <div class="card-header">
@@ -427,4 +560,198 @@ Average Resolution Time
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+new Chart(document.getElementById('statusChart'),{
+
+type:'pie',
+
+data:{
+
+labels:@json($statusLabels),
+
+datasets:[{
+
+data:@json($statusData)
+
+}]
+
+}
+
+});
+
+new Chart(document.getElementById('priorityChart'),{
+
+type:'bar',
+
+data:{
+
+labels:@json($priorityLabels),
+
+datasets:[{
+
+label:'Tickets',
+
+data:@json($priorityData)
+
+}]
+
+}
+
+});
+
+new Chart(document.getElementById('monthlyChart'),{
+
+type:'line',
+
+data:{
+
+labels:@json($monthlyLabels),
+
+datasets:[{
+
+label:'Tickets',
+
+data:@json($monthlyData),
+
+fill:false,
+
+tension:0.3
+
+}]
+
+}
+
+});
+
+
+
+const slaCtx = document.getElementById('slaChart');
+
+new Chart(slaCtx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+
+            'SLA Met',
+            'Breached',
+            'Due Soon',
+            'Overdue'
+
+        ],
+
+        datasets: [{
+
+            label: 'Tickets',
+
+            data: [
+
+                {{ $slaMet }},
+                {{ $slaBreached }},
+                {{ $dueSoon }},
+                {{ $overdueTickets }}
+
+            ],
+
+            backgroundColor: [
+
+                '#198754',
+                '#dc3545',
+                '#ffc107',
+                '#212529'
+
+            ]
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            }
+
+        }
+
+    }
+
+});
+
+
+
+const ctx = document.getElementById('ticketChart');
+
+new Chart(ctx, {
+
+    type: 'doughnut',
+
+    data: {
+
+        labels: [
+
+            'Open',
+
+            'Assigned',
+
+            'In Progress',
+
+            'Resolved',
+
+            'Closed'
+
+        ],
+
+        datasets: [{
+
+            label: 'Tickets',
+
+            data: [
+
+                {{ $openTickets }},
+
+                {{ $assignedTickets }},
+
+                {{ $progressTickets }},
+
+                {{ $resolvedTickets  }},
+
+                {{ $closedTickets }}
+
+            ]
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                position: 'bottom'
+
+            }
+
+        }
+
+    }
+
+});
+</script>
 @endsection

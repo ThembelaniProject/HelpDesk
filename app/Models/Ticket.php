@@ -5,18 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+ use App\Models\ActivityLog;
 
 class Ticket extends Model
 {
     protected $fillable = [
-        'title',
-        'description',
-        'priority',
-        'status',
-        'category_id',
-        'user_id',
-        'technician_id',
-    ];
+    'title',
+    'description',
+    'priority',
+    'status',
+    'category_id',
+    'user_id',
+    'technician_id',
+
+    // SLA fields
+    'due_date',
+    'resolved_at',
+    'sla_breached',
+];
 
     /**
      * User who created the ticket
@@ -57,4 +63,12 @@ class Ticket extends Model
     {
         return $this->hasMany(Attachment::class);
     }
+
+   
+
+public function activities()
+{
+    return $this->hasMany(ActivityLog::class)
+                ->latest();
+}
 }

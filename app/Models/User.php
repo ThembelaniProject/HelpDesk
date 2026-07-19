@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
     'email',
     'password',
     'role_id',
+    'profile_photo',
 ])]
 
 #[Hidden([
@@ -79,6 +80,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(ActivityLog::class);
     }
+
+    public function notifications()
+{
+    return $this->hasMany(Notification::class)
+                ->latest();
+}
 
  
 }

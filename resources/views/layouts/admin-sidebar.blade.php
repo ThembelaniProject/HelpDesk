@@ -44,6 +44,12 @@
 
     </a>
 
+    <a href="{{ route('profile.edit') }}">
+
+        <i class="bi bi-person-circle"></i>
+         Profile
+    </a>
+
     <form method="POST" action="{{ route('logout') }}" class="mt-4 px-3">
         @csrf
         <button class="btn btn-danger w-100">

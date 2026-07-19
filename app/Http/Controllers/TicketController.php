@@ -13,7 +13,7 @@ use App\Mail\TicketCreatedMail;
 use App\Mail\TicketAssignedMail;
 use App\Mail\TicketStatusUpdatedMail;
 use App\Helpers\ActivityHelper;
-
+use App\Helpers\NotificationHelper;
 class TicketController extends Controller
 {
     /**
@@ -100,19 +100,40 @@ $user = Auth::user();
     ]);
 
     $ticket = Ticket::create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'priority' => $request->priority,
-        'status' => 'Open',
-        'category_id' => $request->category_id,
-        'user_id' => Auth::id(),
-        'technician_id' => null,
-    ]);
+    'title' => $request->title,
+    'description' => $request->description,
+    'priority' => $request->priority,
+    'status' => 'Open',
+    'category_id' => $request->category_id,
+    'user_id' => Auth::id(),
+    'technician_id' => null,
+
+    'due_date' => match ($request->priority) {
+
+        'Critical' => now()->addHours(4),
+
+        'High' => now()->addHours(8),
+
+        'Medium' => now()->addDay(),
+
+        default => now()->addDays(3),
+
+    },
+]);
+
+
+NotificationHelper::create(
+    Auth::id(),
+    $ticket->id,
+    'Ticket Created',
+    'Ticket #'.$ticket->id.' was created.'
+);
 
     ActivityHelper::log(
-        'Created Ticket',
-        'Created ticket #' . $ticket->id
-    );
+    'Created Ticket',
+    'Created ticket #' . $ticket->id,
+    $ticket->id
+);
 
     if ($request->hasFile('attachment')) {
 
@@ -146,8 +167,14 @@ return redirect()
      */
     public function show(Ticket $ticket)
 {
-    $ticket->load(['attachments', 'comments', 'category', 'user', 'technician']);
-
+   $ticket->load([
+    'attachments',
+    'comments',
+    'category',
+    'user',
+    'technician',
+    'activities.user',
+]);
     $technicians = User::whereHas('role', function ($query) {
         $query->where('name', 'Technician');
     })->get();
@@ -187,14 +214,25 @@ return redirect()
             'technician_id' => 'nullable|exists:users,id',
         ]);
 
-        $ticket->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'priority' => $request->priority,
-            'status' => $request->status,
-            'category_id' => $request->category_id,
-            'technician_id' => $request->technician_id,
-        ]);
+        $ticket->title = $request->title;
+$ticket->description = $request->description;
+$ticket->priority = $request->priority;
+$ticket->status = $request->status;
+$ticket->category_id = $request->category_id;
+$ticket->technician_id = $request->technician_id;
+
+// Automatically manage resolved_at
+if ($request->status === 'Resolved') {
+
+    $ticket->resolved_at = now();
+
+} else {
+
+    $ticket->resolved_at = null;
+
+}
+
+$ticket->save();
 
         return redirect()
             ->route('tickets.index')
@@ -230,14 +268,19 @@ return redirect()
         'technician_id' => $request->technician_id,
         'status' => 'Assigned',
     ]);
+
+    NotificationHelper::create(
+    $ticket->technician_id,
+    $ticket->id,
+    'Ticket Assigned',
+    'You were assigned Ticket #'.$ticket->id
+);
     ActivityHelper::log(
-
     'Assigned Ticket',
-
     'Assigned Ticket #' . $ticket->id .
     ' to ' .
-    $ticket->technician->name
-
+    $ticket->technician->name,
+    $ticket->id
 );
 
     // Reload relationships
@@ -254,27 +297,61 @@ return redirect()
 
 }
 
+
+
 public function status(Request $request, Ticket $ticket)
 {
     $request->validate([
-        'status' => 'required',
+        'status' => 'required'
     ]);
 
     $ticket->update([
-        'status' => $request->status,
+        'status' => $request->status
     ]);
+
+    // Create notification
+    NotificationHelper::create(
+        $ticket->user_id,
+        $ticket->id,
+        'Ticket Updated',
+        'Status changed to ' . $ticket->status
+    );
+
+    $request->validate([
+        'status' => 'required'
+    ]);
+
+    $data = [];
+
+    if($request->status=="Resolved"){
+
+        $data['resolved_at']=now();
+
+        if($ticket->due_date && now()->greaterThan($ticket->due_date)){
+
+            $data['sla_breached']=true;
+
+        }
+
+    }
+
+    $data['status'] = $request->status;
+
+    $ticket->update($data);
+    $ticket->save();
+
     ActivityHelper::log(
+        'Updated Status',
+        'Ticket #' . $ticket->id .
+        ' changed to ' .
+        $request->status,
+        $ticket->id
+    );
 
-    'Updated Status',
-
-    'Ticket #' . $ticket->id .
-    ' changed to ' .
-    $request->status
-
-);
-
+    // Reload relationships
     $ticket->load('user');
 
+    // Send email notification
     Mail::to($ticket->user->email)
         ->send(new TicketStatusUpdatedMail($ticket));
 

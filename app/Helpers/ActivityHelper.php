@@ -7,20 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityHelper
 {
-    public static function log($action, $description = null)
+    public static function log($action, $description, $ticketId = null)
     {
-        if (Auth::check()) {
-
-            ActivityLog::create([
-
-                'user_id' => Auth::id(),
-
-                'action' => $action,
-
-                'description' => $description,
-
-            ]);
-
-        }
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'ticket_id' => $ticketId,
+            'action' => $action,
+            'description' => $description,
+        ]);
     }
 }

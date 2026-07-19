@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ActivityLog extends Model
+class Notification extends Model
 {
     protected $fillable = [
         'user_id',
-        'action',
-        'description',
         'ticket_id',
+        'title',
+        'message',
+        'is_read'
     ];
 
     public function user()
@@ -22,5 +23,4 @@ class ActivityLog extends Model
     {
         return $this->belongsTo(Ticket::class);
     }
-
 }

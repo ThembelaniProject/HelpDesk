@@ -13,6 +13,7 @@ use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\NotificationController;
 
 
 /*
@@ -52,8 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
+
+    Route::put('/profile/password', [ProfileController::class,'password'])
+        ->name('profile.password');
 
 });
 
@@ -180,5 +182,16 @@ Route::get('/reports/excel', [ReportController::class, 'exportExcel'])
 */
 Route::get('/activity-logs', [ActivityLogController::class, 'index'])
     ->name('activity.index');
+
+/*
+|--------------------------------------------------------------------------
+| Notification
+|--------------------------------------------------------------------------
+*/
+Route::get(
+'/notifications/{notification}/read',
+[NotificationController::class,'read']
+)->name('notifications.read');
+
 
 require __DIR__.'/auth.php';

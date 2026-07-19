@@ -14,7 +14,7 @@
         <i class="bi bi-plus-circle"></i> Create Ticket
     </a>
 
-    <a href="#">
+    <a href="{{ route('profile.edit') }}">
         <i class="bi bi-person"></i> My Profile
     </a>
 

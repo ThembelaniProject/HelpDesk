@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CommentAddedMail;
 use App\Helpers\ActivityHelper;
+use App\Helpers\NotificationHelper;
 
 class CommentController extends Controller
 {
@@ -43,6 +45,17 @@ class CommentController extends Controller
             'user_id'   => Auth::id(),
             'comment'   => $request->comment,
         ]);
+
+        // Fetch the ticket
+        $ticket = Ticket::find($request->ticket_id);
+
+        NotificationHelper::create(
+            $ticket->user_id,
+            $ticket->id,
+            'New Comment',
+           
+            Auth::user()->name.' commented on Ticket #'.$ticket->id
+        );
 
         ActivityHelper::log(
 

@@ -379,7 +379,6 @@
 </div>
 
 <div class="card mt-4">
-
     <div class="card-header bg-dark text-white">
         <i class="bi bi-clock-history"></i>
         Activity Timeline
@@ -391,22 +390,14 @@
 
             <div class="border-start border-4 border-primary ps-3 mb-3">
 
-                <strong>{{ $activity->action }}</strong>
+                <strong>{{ $activity->action }}</strong><br>
 
-                <br>
-
-                {{ $activity->description }}
-
-                <br>
+                {{ $activity->description }}<br>
 
                 <small class="text-muted">
-
-                    {{ $activity->user->name }}
-
+                    {{ $activity->user->name ?? 'System' }}
                     •
-
                     {{ $activity->created_at->diffForHumans() }}
-
                 </small>
 
             </div>
@@ -414,15 +405,12 @@
         @empty
 
             <div class="alert alert-info">
-
-                No activity recorded.
-
+                No activity recorded yet.
             </div>
 
         @endforelse
 
     </div>
-
 </div>
 
 @endsection
