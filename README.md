@@ -1,58 +1,289 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎫 HelpDesk Management System
+A modern, secure, and scalable **HelpDesk Management System** built with **PHP**, **MySQL**, HTML5, CSS3, JavaScript, and Bootstrap. The system streamlines IT support operations by enabling users to submit support tickets, track issue resolution, and improve communication between end-users, technicians, and administrators.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# 📖 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The **HelpDesk Management System (HDMS)** is a web-based application developed to simplify and automate IT support and customer service operations. It provides a centralized platform where users can report technical issues, track support requests, and communicate with support staff throughout the resolution process.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Support teams can efficiently manage, prioritize, assign, and resolve tickets, while administrators gain access to dashboards, analytics, and reporting tools that improve operational performance and service delivery.
 
-## Learning Laravel
+The system demonstrates industry-standard software development practices, including authentication, role-based access control, database management, CRUD operations, responsive design, and secure application architecture.
+-
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# 🎯 Objectives
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The primary objectives of this project are to:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- Digitize IT support processes
+- Improve communication between users and technicians
+- Reduce ticket response and resolution times
+- Improve service quality and accountability
+- Centralize issue tracking
+- Generate support analytics and reports
+- Increase operational efficiency
+- Provide a scalable helpdesk platform
 
-## Agentic Development
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 👤 End User Portal
 
-```bash
-composer require laravel/boost --dev
+- Secure User Registration
+- User Login
+- Dashboard
+- Create Support Tickets
+- View Ticket Status
+- Add Comments
+- Upload Attachments
+- View Ticket History
+- Profile Management
+- Password Reset
+- Email Notifications
 
-php artisan boost:install
+
+## 👨‍🔧 Technician Portal
+
+- Secure Login
+- Technician Dashboard
+- View Assigned Tickets
+- Accept Tickets
+- Update Ticket Progress
+- Add Resolution Notes
+- Upload Supporting Files
+- Close Tickets
+- View Assigned Ticket History
+
+
+## 👨‍💼 Administrator Portal
+
+- Administrative Dashboard
+- User Management
+- Technician Management
+- Department Management
+- Category Management
+- Ticket Assignment
+- Ticket Monitoring
+- Priority Management
+- System Configuration
+- Reports & Analytics
+- Audit Logs
+
+
+## 🎫 Ticket Management
+
+- Create Tickets
+- Assign Tickets
+- Update Ticket Status
+- Change Priority
+- Reassign Tickets
+- Close Tickets
+- Reopen Closed Tickets
+- Ticket Comments
+- File Attachments
+- Resolution Tracking
+
+
+## 📊 Reports & Analytics
+
+- Total Tickets
+- Open Tickets
+- Closed Tickets
+- Pending Tickets
+- High Priority Tickets
+- Technician Performance
+- Department Statistics
+- Average Resolution Time
+- Monthly Ticket Trends
+- Customer Satisfaction Reports
+
+
+
+## 🔔 Notification System
+
+Automated notifications include:
+
+- New Ticket Created
+- Ticket Assigned
+- Status Updated
+- Technician Response
+- Ticket Resolved
+- Ticket Closed
+- Password Reset
+- System Announcements
+
+
+
+# 🏗️ System Architecture
+
 ```
+                    Web Browser
+                         │
+                         ▼
+                  Apache Web Server
+                         │
+                         ▼
+                  PHP Application
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+        ▼                ▼                ▼
+ Authentication   Business Logic   Notification Module
+        │                │                │
+        └────────────────┼────────────────┘
+                         │
+                         ▼
+                    MySQL Database
+                         │
+                         ▼
+                HelpDesk Information
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+# 💻 Technology Stack
 
-## Contributing
+## Backend
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP 8+
+- MySQL
+- PDO (PHP Data Objects)
 
-## Code of Conduct
+## Frontend
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- HTML5
+- CSS3
+- Bootstrap 5
+- JavaScript
+- AJAX
+- jQuery
 
-## Security Vulnerabilities
+## Database
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- MySQL
 
-## License
+## Development Tools
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Visual Studio Code
+- XAMPP / Laragon
+- phpMyAdmin
+- Git
+- GitHub
+
+---
+
+# 🔑 Core Modules
+
+| Module | Description |
+|----------|-------------|
+| Authentication | User registration and secure login |
+| Ticket Management | Create, assign, update, and resolve support tickets |
+| User Management | Manage users and technicians |
+| Department Management | Organize support departments |
+| Notifications | Email and system notifications |
+| Reporting | Generate support reports and statistics |
+| Dashboard | Real-time system overview |
+| Audit Logs | Track user and system activities |
+
+
+
+# 🔐 Security Features
+
+The application follows modern security best practices:
+
+- Password Hashing
+- Prepared SQL Statements (PDO)
+- SQL Injection Prevention
+- Cross-Site Scripting (XSS) Protection
+- Cross-Site Request Forgery (CSRF) Protection
+- Session Management
+- Role-Based Access Control (RBAC)
+- Secure Authentication
+- Input Validation
+- Access Control for Administrative Pages
+
+
+
+# 👥 User Roles
+
+| Role | Responsibilities |
+|------|------------------|
+| User | Submit and track support tickets |
+| Technician | Resolve assigned support tickets |
+| Administrator | Manage users, tickets, technicians, and reports |
+
+
+
+# 🔄 Ticket Workflow
+
+```
+User
+   │
+   ▼
+Create Support Ticket
+   │
+   ▼
+Administrator Reviews Ticket
+   │
+   ▼
+Assign Technician
+   │
+   ▼
+Technician Investigates Issue
+   │
+   ▼
+Update Ticket Status
+   │
+   ▼
+Issue Resolved
+   │
+   ▼
+Ticket Closed
+   │
+   ▼
+User Receives Notification
+
+
+# 🗄️ Database Tables
+
+The system includes tables such as:
+
+- users
+- technicians
+- administrators
+- tickets
+- ticket_comments
+- departments
+- categories
+- priorities
+- statuses
+- attachments
+- notifications
+- audit_logs
+
+
+# 📊 Future Enhancements
+
+Future versions may include:
+
+- Live Chat Support
+- AI Chatbot Assistance
+- Knowledge Base
+- Mobile Application
+- Push Notifications
+- SMS Notifications
+- SLA Management
+- Customer Satisfaction Surveys
+- Multi-language Support
+- REST API
+- Docker Support
+- Cloud Deployment
+
+
+# 🙏 Acknowledgements
+
+The HelpDesk Management System was developed to demonstrate practical software engineering skills while addressing common challenges in IT support and service management. The project showcases experience in full-stack web development, relational database design, authentication and authorization, secure coding practices, and responsive user interface development.
+
+---
+
+## ⭐ Support the Project
+
+If you found this project useful, please consider giving it a **⭐ Star** on GitHub. Your support helps improve the visibility of the project and motivates future enhancements.
+
+**Built with ❤️ by Thembelani Sikhona Buthelezi.**
