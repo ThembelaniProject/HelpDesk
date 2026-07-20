@@ -137,34 +137,6 @@ Automated notifications include:
                          ▼
                 HelpDesk Information
 
-# 💻 Technology Stack
-
-## Backend
-
-- PHP 8+
-- MySQL
-- PDO (PHP Data Objects)
-
-## Frontend
-
-- HTML5
-- CSS3
-- Bootstrap 5
-- JavaScript
-- AJAX
-- jQuery
-
-## Database
-
-- MySQL
-
-## Development Tools
-
-- Visual Studio Code
-- XAMPP / Laragon
-- phpMyAdmin
-- Git
-- GitHub
 
 ---
 
