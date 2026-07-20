@@ -138,79 +138,10 @@ Automated notifications include:
                 HelpDesk Information
 
 
----
-
-# 🔑 Core Modules
-
-| Module | Description |
-|----------|-------------|
-| Authentication | User registration and secure login |
-| Ticket Management | Create, assign, update, and resolve support tickets |
-| User Management | Manage users and technicians |
-| Department Management | Organize support departments |
-| Notifications | Email and system notifications |
-| Reporting | Generate support reports and statistics |
-| Dashboard | Real-time system overview |
-| Audit Logs | Track user and system activities |
-
-
-
-# 🔐 Security Features
-
-The application follows modern security best practices:
-
-- Password Hashing
-- Prepared SQL Statements (PDO)
-- SQL Injection Prevention
-- Cross-Site Scripting (XSS) Protection
-- Cross-Site Request Forgery (CSRF) Protection
-- Session Management
-- Role-Based Access Control (RBAC)
-- Secure Authentication
-- Input Validation
-- Access Control for Administrative Pages
-
-
-
-# 👥 User Roles
-
-| Role | Responsibilities |
-|------|------------------|
-| User | Submit and track support tickets |
-| Technician | Resolve assigned support tickets |
-| Administrator | Manage users, tickets, technicians, and reports |
-
-
-
-# 🔄 Ticket Workflow
 
 ```
 User
-   │
-   ▼
-Create Support Ticket
-   │
-   ▼
-Administrator Reviews Ticket
-   │
-   ▼
-Assign Technician
-   │
-   ▼
-Technician Investigates Issue
-   │
-   ▼
-Update Ticket Status
-   │
-   ▼
-Issue Resolved
-   │
-   ▼
-Ticket Closed
-   │
-   ▼
-User Receives Notification
-
+   
 
 # 🗄️ Database Tables
 
